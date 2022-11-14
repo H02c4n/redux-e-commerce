@@ -1,17 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../../auth/firebaase";
 import AddressDetails from "./AddressDetails";
 import OtherInfo from "./OtherInfo";
 import PersonalInfo from "./PersonalInfo";
 
 const Form = () => {
+  const navigate = useNavigate()
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    Email: "",
+    email: "",
     password: "",
     age: "",
-    gender: "",
     address: "",
     city: "",
     zipCode: "",
@@ -22,12 +24,12 @@ const Form = () => {
   const FormTitles = ["Personal Info", "Address Details", "Other Info"];
 
   const PageDisplay = () => {
-    if (page == 0) {
-      return <PersonalInfo />;
-    } else if (page == 1) {
-      return <AddressDetails />;
+    if (page === 0) {
+      return <PersonalInfo formData={formData} setFormData={setFormData} />;
+    } else if (page === 1) {
+      return <AddressDetails formData={formData} setFormData={setFormData} />;
     } else {
-      return <OtherInfo />;
+      return <OtherInfo formData={formData} setFormData={setFormData} />;
     }
   };
 
@@ -45,7 +47,7 @@ const Form = () => {
                 <div
                   style={{
                     borderRadius:"5px",
-                    width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%",
+                    width: page === 0 ? "33.3%" : page === 1 ? "66.6%" : "100%",
                   }}
                 ></div>
               </div>
@@ -54,7 +56,7 @@ const Form = () => {
             <div className="form-body">{PageDisplay()} </div>
             <div className="form-footer">
               <button
-                disabled={page == 0}
+                disabled={page === 0}
                 onClick={() => {
                   setPage((currPage) => currPage - 1);
                 }}
@@ -65,8 +67,10 @@ const Form = () => {
               <button
                 onClick={() => {
                     if (page === FormTitles.length - 1) {
-                      alert("FORM SUBMITTED");
-                      console.log(formData);
+                      registerUser(formData);
+                       alert("FORM SUBMITTED");
+                     // console.log(formData);
+                      navigate("/login");
                     } else {
                       setPage((currPage) => currPage + 1);
                     }

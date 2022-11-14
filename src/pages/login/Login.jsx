@@ -1,15 +1,15 @@
 import React from 'react'
-import Form from './components/Form'
+import RegisterForm from './components/LoginForm'
 
 const Login = () => {
   return (
     <div className="container">
-      <div className="row ">
-        <div>
-          <Form/>
-        </div>
+    <div className="row ">
+      <div>
+        <RegisterForm />
       </div>
     </div>
+  </div>
   )
 }
 
